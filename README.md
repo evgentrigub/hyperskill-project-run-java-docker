@@ -1,20 +1,31 @@
 # How to complete this project
 
 ### Stage 1 Write and Compile a Simple Java Demo
-1.  Print line `Hello from Docker!` in Main.java
+1. In the `main()` method ask user to the name and output the line with greetings.
 ```java
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, Docker!");
+        System.out.print("Enter your name: ");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+        System.out.printf("Hello, %s! Greetings from Docker!", name);
     }
 }
+```
+The output logs should be:
+```text
+Enter your name: 
+John
+Hello, John! Greetings from Docker!
 ```
 From the root directory of the project:
 2. Create `build` directory
 ```bash
 mkdir -p build
 ```
-3. Build the project
+3. Compile the `Main.java` in the `build` directory
 ```bash
 javac -d build src/main/java/project/Main.java
 ```
@@ -30,9 +41,6 @@ cp src/main/resources/META-INF/MANIFEST.MF build/MANIFEST.MF
 ```
 ### Stage 3 Build an Executable JAR File
 1. Navigate to the `build` directory
-```bash
-cd build
-```
 2. Create an executable JAR file with the name `app.jar`
 ```bash
 jar cmf MANIFEST.MF app.jar project/Main.class
@@ -42,6 +50,7 @@ jar cmf MANIFEST.MF app.jar project/Main.class
 java -jar app.jar
 ```
 ### Stage 4 Build a Minimal Docker Image
+From the root directory of the project:
 1. Create a Dockerfile in the root directory with the following content:
 ```dockerfile
 FROM eclipse-temurin:21-jre-alpine
@@ -53,11 +62,13 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 docker build -t java-docker-demo .
 ```
 ### Stage 5 Run Docker Container and Interact
-1. Run the Docker container
+1. Run the Docker container with enabled interactive mode
 ```bash
-docker run java-docker-demo
+docker run -it java-docker-demo
 ```
 2. Check the expected output of the container
 ```text
-Hello from Docker!
+Enter your name: 
+John
+Hello, John! Greetings from Docker!
 ```
