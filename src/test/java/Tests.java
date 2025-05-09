@@ -1,5 +1,5 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +14,7 @@ public class Tests {
 
 //    STAGE 1
     @Test
-    void shouldPromptForUserNameAndGreetAndDockerGreeting() {
+    public void shouldPromptForUserNameAndGreetAndDockerGreeting() {
         String simulatedInput = "John\n";
         InputStream oldIn  = System.in;
         PrintStream oldOut = System.out;
@@ -34,43 +34,44 @@ public class Tests {
 
         String output = testOut.toString();
 
-        assertTrue(output.toLowerCase().contains("enter your name"), 
-            "Your program should ask for the user's name with the message 'Enter your name:'");
-        assertTrue(output.contains("Hello, John!"), 
-            "Your program should output 'Hello, John!' after the user name.");
-        assertTrue(output.contains("Greetings from Docker"), 
-            "Your program should output 'Greetings from Docker'!");
+        assertTrue("Your program should ask for the user's name with the message 'Enter your name:'",
+                output.toLowerCase().contains("enter your name"));
+        assertTrue("Your program should output 'Hello, John!' after the user name.",
+                output.contains("Hello, John!"));
+        assertTrue("Your program should output 'Greetings from Docker'!",
+                output.contains("Greetings from Docker"));
+
     }
 
 //    STAGE 2
     @Test
-    void buildDirectoryShouldExist() {
+    public void buildDirectoryShouldExist() {
         File buildDir = new File("build_dir");
         String cwd = System.getProperty("user.dir");
-        assertTrue(buildDir.exists() && buildDir.isDirectory(),
-            "The 'build' directory was not found. Make sure you're in the correct directory (" + cwd + ").");
+        assertTrue("The 'build' directory was not found. Make sure you're in the correct directory (" + cwd + ").",
+                buildDir.exists() && buildDir.isDirectory());
     }
 
     @Test
-    void mainClassShouldExistInBuildDirectory() {
+    public void mainClassShouldExistInBuildDirectory() {
         File mainClass = new File("build_dir/Main.class");
-        assertTrue(mainClass.exists(),
-            "The 'Main.class' file was not found in 'build_dir'. Ensure you compiled your Java file correctly.");
+        assertTrue("The 'Main.class' file was not found in 'build_dir'. Ensure you compiled your Java file correctly.",
+                mainClass.exists());
     }
 
     @Test
-    void checkManifestFileInBuild() {
+    public void checkManifestFileInBuild() {
         File manifestFile = new File("src/main/resources/META-INF/MANIFEST.MF");
-        assertTrue(manifestFile.exists(),
-            "The 'MANIFEST.MF' file was not found in the 'resources' directory.");
+        assertTrue("The 'MANIFEST.MF' file was not found in the 'resources' directory.",
+                manifestFile.exists());
 
         File manifestFileInBuild = new File("build_dir/MANIFEST.MF");
-        assertTrue(manifestFileInBuild.exists(),
-            "The 'MANIFEST.MF' file was not found in the 'build_dir' directory.");
+        assertTrue("The 'MANIFEST.MF' file was not found in the 'build_dir' directory.",
+                manifestFileInBuild.exists());
     }
 
     @Test
-    void checkManifestContent() {
+    public void checkManifestContent() {
         File manifestFile = new File("build_dir/MANIFEST.MF");
 
         String content = "";
@@ -80,10 +81,10 @@ public class Tests {
             fail("Error reading 'MANIFEST.MF': " + e.getMessage());
         }
 
-        assertTrue(content.contains("Manifest-Version: 1.0"),
-            "The 'MANIFEST.MF' file does not specify 'Manifest-Version: 1.0'.");
-        assertTrue(content.contains("Main-Class: Main"),
-            "The 'MANIFEST.MF' file does not specify 'Main-Class: Main'.");
+        assertTrue("The 'MANIFEST.MF' file does not specify 'Manifest-Version: 1.0'.",
+                content.contains("Manifest-Version: 1.0"));
+        assertTrue("The 'MANIFEST.MF' file does not specify 'Main-Class: Main'.",
+                content.contains("Main-Class: Main"));
     }
 
     //    STAGE 3
