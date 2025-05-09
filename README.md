@@ -1,7 +1,7 @@
 # How to complete this project
 
-### Stage 1 Write and Compile a Simple Java Demo
-1. In the `main()` method ask user to the name and output the line with greetings.
+### Stage 1 Write a simple Java program
+1. In the `main()` method ask user the name and output the line with greetings.
 ```java
 import java.util.Scanner;
 
@@ -20,22 +20,26 @@ Enter your name:
 John
 Hello, John! Greetings from Docker!
 ```
+### Stage 2 Compile and create a Manifest File
 From the root directory of the project:
-2. Create `build` directory
+1. Create `build` directory
 ```bash
 mkdir -p build
 ```
-3. Compile the `Main.java` in the `build` directory
+2. Compile the `Main.java` in the `build` directory
 ```bash
 javac -d build src/main/java/project/Main.java
 ```
-### Stage 2 Create a Manifest File
-1. Create MANIFEST.MF file in the `resources` directory with content inside:
+3. Create `resources` and `META-INF` directory in the `java` directory src/main
+```bash
+mkdir -p src/main/resources/META-INF
+```
+4. Create MANIFEST.MF file in the `META-INF` directory with content inside:
 ```text
 Manifest-Version: 1.0
 Main-Class: project.Main
 ```
-2. Copy MANIFEST.MF file to the `build` directory
+5. Copy MANIFEST.MF file to the `build` directory
 ```bash
 cp src/main/resources/META-INF/MANIFEST.MF build/MANIFEST.MF
 ```
@@ -45,7 +49,7 @@ cp src/main/resources/META-INF/MANIFEST.MF build/MANIFEST.MF
 ```bash
 jar cmf MANIFEST.MF app.jar project/Main.class
 ```
-3. Test the JAR file, it should print `Hello from Docker!`
+3. Test the JAR file, it should request the name and output the line with greetings.
 ```bash
 java -jar app.jar
 ```
@@ -57,14 +61,14 @@ FROM eclipse-temurin:21-jre-alpine
 COPY build/app.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
 ```
-2. Build the Docker image with the name `java-docker-demo`
+2. Build the Docker image with the name `java-in-docker`
 ```bash
-docker build -t java-docker-demo .
+docker build -t java-in-docker .
 ```
 ### Stage 5 Run Docker Container and Interact
 1. Run the Docker container with enabled interactive mode
 ```bash
-docker run -it java-docker-demo
+docker run -i --name java-in-docker-container java-in-docker
 ```
 2. Check the expected output of the container
 ```text
