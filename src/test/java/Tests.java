@@ -1,5 +1,3 @@
-package project;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,8 +16,8 @@ public class Tests {
     @Test
     void shouldPromptForUserNameAndGreetAndDockerGreeting() {
         String simulatedInput = "John\n";
-        InputStream  oldIn  = System.in;
-        PrintStream  oldOut = System.out;
+        InputStream oldIn  = System.in;
+        PrintStream oldOut = System.out;
         ByteArrayInputStream  testIn  = new ByteArrayInputStream(simulatedInput.getBytes());
         ByteArrayOutputStream testOut = new ByteArrayOutputStream();
 
@@ -55,9 +53,9 @@ public class Tests {
 
     @Test
     void mainClassShouldExistInBuildDirectory() {
-        File mainClass = new File("build_dir/project/Main.class");
+        File mainClass = new File("build_dir/Main.class");
         assertTrue(mainClass.exists(),
-            "The 'Main.class' file was not found in 'build_dir/project'. Ensure you compiled your Java file correctly.");
+            "The 'Main.class' file was not found in 'build_dir'. Ensure you compiled your Java file correctly.");
     }
 
     @Test
@@ -84,18 +82,18 @@ public class Tests {
 
         assertTrue(content.contains("Manifest-Version: 1.0"),
             "The 'MANIFEST.MF' file does not specify 'Manifest-Version: 1.0'.");
-        assertTrue(content.contains("Main-Class: project.Main"),
-            "The 'MANIFEST.MF' file does not specify 'Main-Class: project.Main'.");
+        assertTrue(content.contains("Main-Class: Main"),
+            "The 'MANIFEST.MF' file does not specify 'Main-Class: Main'.");
     }
 
     //    STAGE 3
 
     /**
-     * Checks files: project/Main.class, MANIFEST.MF, app.jar
+     * Checks files: Main.class, MANIFEST.MF, app.jar
      */
     @Test
     public void checkFilesInBuild() {
-        File mainClassFile = new File("build_dir", "project/Main.class");
+        File mainClassFile = new File("build_dir", "Main.class");
         if (!mainClassFile.exists()) {
             fail("The 'Main.class' file was not found in the 'build_dir' directory. Ensure you compiled your Java file correctly.");
         }
@@ -112,7 +110,7 @@ public class Tests {
     }
 
     /**
-     * Checks if the 'app.jar' file exists and contains the required entries: project/Main.class, META-INF/, META-INF/MANIFEST.MF
+     * Checks if the 'app.jar' file exists and contains the required entries: Main.class, META-INF/, META-INF/MANIFEST.MF
      */
     @Test
     public void checkJarContent() {
@@ -121,7 +119,7 @@ public class Tests {
             fail("The 'app.jar' file was not found in the 'build_dir' directory.");
         }
 
-        Set<String> expectedEntries = Set.of("project/Main.class", "META-INF/", "META-INF/MANIFEST.MF");
+        Set<String> expectedEntries = Set.of("Main.class", "META-INF/", "META-INF/MANIFEST.MF");
 
         Set<String> actualEntries = new HashSet<>();
         try (JarFile jar = new JarFile(jarFile)) {
@@ -133,7 +131,7 @@ public class Tests {
             fail("An error occurred while reading 'app.jar': " + e.getMessage());
         }
 
-        final String HINT = "Your build_dir should contain only project/Main.class and MANIFEST.MF before you create jar file.";
+        final String HINT = "Your build_dir should contain only Main.class and MANIFEST.MF before you create jar file.";
         if (!actualEntries.containsAll(expectedEntries)) {
             fail(
                     "The 'app.jar' does not contain required entries. Expected entries: " + expectedEntries +
