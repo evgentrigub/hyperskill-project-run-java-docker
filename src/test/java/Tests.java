@@ -61,10 +61,6 @@ public class Tests {
 
     @Test
     public void checkManifestFileInBuild() {
-        File manifestFile = new File("src/main/resources/META-INF/MANIFEST.MF");
-        assertTrue("The 'MANIFEST.MF' file was not found in the 'resources' directory.",
-                manifestFile.exists());
-
         File manifestFileInBuild = new File("build_dir/MANIFEST.MF");
         assertTrue("The 'MANIFEST.MF' file was not found in the 'build_dir' directory.",
                 manifestFileInBuild.exists());

@@ -21,28 +21,31 @@ John
 Hello, John! Greetings from Docker!
 ```
 ### Stage 2 Compile and create a Manifest File
-From the root directory of the project:
+Right-click on the Main.java and select `Open in` ->`Terminal`. 
+In the terminal:
 1. Create `build_dir` directory
-```bash
-mkdir -p build_dir
+```bash 
+mkdir ../../../build_dir
 ```
-2. Compile the `Main.java` in the `build_dir` directory
-```bash
-javac -d build_dir src/main/java/Main.java
-```
-3. Create `resources` and `META-INF` directory in the `java` directory src/main
-```bash
-mkdir -p src/main/resources/META-INF
-```
-4. Create MANIFEST.MF file in the `META-INF` directory with content inside:
+2. Create MANIFEST.MF file in the `META-INF` directory with content inside:
 ```text
 Manifest-Version: 1.0
 Main-Class: Main
 ```
-5. Copy MANIFEST.MF file to the `build_dir` directory
+Use `echo` command and destination path to create the MANIFEST.MF file:
 ```bash
-cp src/main/resources/META-INF/MANIFEST.MF build_dir/MANIFEST.MF
+echo "Manifest-Version: 1.0\nMain-Class: Main" > ../../../build_dir/MANIFEST.MF
 ```
+3. Switch to the root directory, that contains the `src` and `build_dir` directory
+```bash
+cd ../../../
+```
+4.Compile the `Main.java` in the `build_dir` directory
+```bash
+javac -d build_dir src/main/java/Main.java
+```
+Now the `build_dir` directory should contain the compiled class file `Main.class` and the `MANIFEST.MF` file inside.
+
 ### Stage 3 Build an Executable JAR File
 1. Navigate to the `build_dir` directory
 2. Create an executable JAR file with the name `app.jar`
