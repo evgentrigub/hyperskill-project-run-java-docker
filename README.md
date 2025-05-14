@@ -21,11 +21,11 @@ John
 Hello, John! Greetings from Docker!
 ```
 ### Stage 2 Compile and create a Manifest File
-Right-click on the Main.java and select `Open in` ->`Terminal`. 
+Use hotkey to open `Terminal` in IDEA. 
 In the terminal:
 1. Create `build_dir` directory
 ```bash 
-mkdir ../../../build_dir
+mkdir build_dir
 ```
 2. Create MANIFEST.MF file in the `META-INF` directory with content inside:
 ```text
@@ -34,13 +34,9 @@ Main-Class: Main
 ```
 Use `echo` command and destination path to create the MANIFEST.MF file:
 ```bash
-echo "Manifest-Version: 1.0\nMain-Class: Main" > ../../../build_dir/MANIFEST.MF
+echo "Manifest-Version: 1.0\nMain-Class: Main" > build_dir/MANIFEST.MF
 ```
-3. Switch to the root directory, that contains the `src` and `build_dir` directory
-```bash
-cd ../../../
-```
-4.Compile the `Main.java` in the `build_dir` directory
+3. Compile the `Main.java` in the `build_dir` directory
 ```bash
 javac -d build_dir src/main/java/Main.java
 ```
